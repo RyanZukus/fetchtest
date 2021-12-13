@@ -1,0 +1,42 @@
+<h1>Main Page</h1>
+<form action="{% url 'fetcher:add' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h2>Add New Record</h2></legend>
+        {% if add_error_message %}<p><strong>{{ add_error_message }}</strong></p>{% endif %}
+        <label for="payer">Payer</label>
+        <input type="text" name="payer">
+        <label for="points">Points</label>
+        <input type="number" name="points">
+    </fieldset>
+    <input type="submit" value="Add">
+</form>
+
+<form action="{% url 'fetcher:spend' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h2>Spend Points</h2></legend>
+        {% if spend_error_message %}<p><strong>{{ spend_error_message }}</strong></p>{% endif %}
+        <label for="points">Points</label>
+        <input type="number" name="points">
+    </fieldset>
+    <input type="submit" value="Spend">
+</form>
+
+<table>
+    <caption>All Records</caption>
+    <thead>
+        <th>Payer</th>
+        <th>Points</th>
+        <th>Timestamp</th>
+    </thead>
+    <tbody>
+        {% for record in records.all %}
+        <tr>
+            <td>{{ record.payer }}</td>
+            <td>{{ record.points }}</td>
+            <td>{{ record.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
